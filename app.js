@@ -70,6 +70,21 @@ app.get("/makeup/:id", function(req, res){
     });
 })
 
+// ====================
+// COMMENTS ROUTES
+// ====================
+
+app.get("/makeup/:id/comments/new", function(req, res){
+    // find makeup by id
+    Makeup.findById(req.params.id, function(err, makeup){
+        if(err){
+            console.log(err);
+        } else {
+             res.render("comments/new", {makeup: makeup});
+        }
+    })
+});
+
 // Server Started
 app.listen(process.env.PORT || 3000, function () {
   console.log('Express server is up and running on http://localhost:3000/');
