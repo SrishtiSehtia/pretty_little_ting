@@ -30,7 +30,7 @@ app.get("/", function(req, res){
 //INDEX - show all makeup
 app.get("/makeup", function(req, res){
     // Get all makeup from DB
-    Campground.find({}, function(err, allMakeup){
+    Makeup.find({}, function(err, allMakeup){
        if(err){
            console.log(err);
        } else {
@@ -39,14 +39,22 @@ app.get("/makeup", function(req, res){
     });
 });
 
+//CREATE - add new makeup to DB
 app.post("/makeup", function(req, res){
     // get data from form and add to makeup array
     var name = req.body.name;
     var image = req.body.image;
-    var newMakeup = {name: name, image: image}
-    makeup.push(newMakeup);
-    //redirect back to makeup page
-    res.redirect("/makeup");
+    var desc = req.body.description;
+    var newMakeup = {name: name, image: image, description: desc}
+    // Create a new makeup and save to DB
+    Makeup.create(newMakeup, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+            //redirect back to makeup page
+            res.redirect("/makeup");
+        }
+    });
 });
 
 app.get("/makeup/new", function(req, res){
