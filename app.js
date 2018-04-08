@@ -1,26 +1,19 @@
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose")
+    mongoose    = require("mongoose"),
+    Makeup      = require("./models/makeup"),
 
 mongoose.connect("mongodb://localhost/plt");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// SCHEMA SETUP
-var makeupSchema = new mongoose.Schema({
-   name: String,
-   image: String,
-   description: String
-});
 
-var Makeup = mongoose.model("Makeup", makeupSchema);
-
-var makeup = [
-        {name: "Too Faced Mascara", image: "https://www.sephora.com/productimages/sku/s1533439-main-Lhero.jpg"},
-        {name: "Kat Von D Liquid Lipstick", image: "https://www.sephora.com/productimages/sku/s1890623-main-hero-300.jpg"},
-        {name: "Giorgio Armani Foundation", image: "https://www.sephora.com/productimages/sku/s1359553-main-Lhero.jpg"}
-];
+// var makeup = [
+//         {name: "Too Faced Mascara", image: "https://www.sephora.com/productimages/sku/s1533439-main-Lhero.jpg"},
+//         {name: "Kat Von D Liquid Lipstick", image: "https://www.sephora.com/productimages/sku/s1890623-main-hero-300.jpg"},
+//         {name: "Giorgio Armani Foundation", image: "https://www.sephora.com/productimages/sku/s1359553-main-Lhero.jpg"}
+// ];
 
 app.get("/", function(req, res){
     res.render("landing");
