@@ -4,9 +4,17 @@ var express     = require("express"),
     mongoose    = require("mongoose")
 
 mongoose.connect("mongodb://localhost/plt");
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+
+// SCHEMA SETUP
+var makeupSchema = new mongoose.Schema({
+   name: String,
+   image: String,
+   description: String
+});
+
+var Makeup = mongoose.model("Makeup", makeupSchema);
 
 var makeup = [
         {name: "Too Faced Mascara", image: "https://www.sephora.com/productimages/sku/s1533439-main-Lhero.jpg"},
