@@ -1,0 +1,27 @@
+<% include partials/header %>
+ <div class="container">
+     <header class="jumbotron">
+         <div class="container">
+             <h1>Welcome To Pretty Little Ting!</h1>
+             <p>A crowd-sourced makeup review app!</p>
+             <p>
+                <a class="btn btn-primary btn-large" href="/makeup/new">Add New Makeup</a>
+             </p>
+         </div>
+     </header>
+
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% makeup.forEach(function(makeup){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <img src="<%= makeup.image %>">
+                   <div class="caption">
+                       <h4><%= makeup.name %></h4>
+                   </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include partials/footer %>
