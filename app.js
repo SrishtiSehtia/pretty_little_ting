@@ -3,6 +3,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
     Makeup      = require("./models/makeup"),
+    Review      = require("./models/review"),
     seedDB      = require("./seeds")
 
 mongoose.connect("mongodb://localhost/plt");

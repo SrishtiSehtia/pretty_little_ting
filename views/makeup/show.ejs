@@ -1,18 +1,42 @@
 <% include ../partials/header %>
-<h1><%=makeup.name%></h1>
-
-<img src="<%= makeup.image %>">
-
-<p><%= makeup.description %></p>
-
-<p>
-    <a class="btn btn-success" href="/makeup/<%= makeup._id %>/reviews/new">Add A New Review</a>
-</p>
-
-<% makeup.reviews.forEach(function(review){ %>
-    <p>
-        <strong><%= review.author %></strong> - <%= review.text %>
-    </p>
-<% }) %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Pretty Little Ting</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= makeup.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">$28.99</h4>
+                    <h4><a><%=makeup.name%></a></h4>
+                    <p><%= makeup.description %></p>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/makeup/<%= makeup._id %>/reviews/new">Add New Review</a>
+                </div>
+                <hr>
+                <% makeup.reviews.forEach(function(review){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= review.author %></strong>
+                            <span class="pull-right">10 days ago</span>
+                            <p>
+                                <%= review.text %>
+                            </p>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
 
 <% include ../partials/footer %>
