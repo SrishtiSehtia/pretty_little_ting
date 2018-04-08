@@ -29,7 +29,7 @@ app.get("/makeup", function(req, res){
        if(err){
            console.log(err);
        } else {
-          res.render("index",{makeup:allMakeup});
+          res.render("makeup/index",{makeup:allMakeup});
        }
     });
 });
@@ -54,7 +54,7 @@ app.post("/makeup", function(req, res){
 
 //NEW - show form to create new makeup
 app.get("/makeup/new", function(req, res){
-   res.render("new.ejs");
+   res.render("makeup/new");
 });
 
 // SHOW - shows more info about one makeup
@@ -65,7 +65,7 @@ app.get("/makeup/:id", function(req, res){
             console.log(err);
         } else {
             //render show template with that makeup
-            res.render("show", {makeup: foundMakeup});
+            res.render("makeup/show", {makeup: foundMakeup});
         }
     });
 })
