@@ -57,9 +57,23 @@ app.post("/makeup", function(req, res){
     });
 });
 
+//NEW - show form to create new makeup
 app.get("/makeup/new", function(req, res){
    res.render("new.ejs");
 });
+
+// SHOW - shows more info about one makeup
+app.get("/makeup/:id", function(req, res){
+    //find the makeup with provided ID
+    Makeup.findById(req.params.id, function(err, foundMakeup){
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that makeup
+            res.render("show", {makeup: foundMakeup});
+        }
+    });
+})
 
 // Server Started
 app.listen(process.env.PORT || 3000, function () {
