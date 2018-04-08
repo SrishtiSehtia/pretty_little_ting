@@ -8,6 +8,7 @@ var express     = require("express"),
 mongoose.connect("mongodb://localhost/plt");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+seedDB();
 
 
 // var makeup = [
@@ -59,7 +60,7 @@ app.get("/makeup/new", function(req, res){
 // SHOW - shows more info about one makeup
 app.get("/makeup/:id", function(req, res){
     //find the makeup with provided ID
-    Makeup.findById(req.params.id, function(err, foundMakeup){
+    Makeup.findById(req.params.id).populate('comments').exec(function(err, foundMakeup){
         if(err){
             console.log(err);
         } else {
