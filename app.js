@@ -27,6 +27,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){
+   res.locals.currentUser = req.user;
+   next();
+});
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -83,10 +87,10 @@ app.get("/makeup/:id", function(req, res){
 })
 
 // ====================
-// reviewS ROUTES
+// REVIEWS ROUTES
 // ====================
 
-app.get("/makeup/:id/reviews/new", function(req, res){
+app.get("/makeup/:id/reviews/new", isLoggedIn, function(req, res){
     // find makeup by id
     Makeup.findById(req.params.id, function(err, makeup){
         if(err){
@@ -97,7 +101,7 @@ app.get("/makeup/:id/reviews/new", function(req, res){
     })
 });
 
-app.post("/makeup/:id/reviews", function(req, res){
+app.post("/makeup/:id/reviews", isLoggedIn, function(req, res){
    //lookup makeup using ID
    Makeup.findById(req.params.id, function(err, makeup){
        if(err){
@@ -159,6 +163,13 @@ app.get("/logout", function(req, res){
    req.logout();
    res.redirect("/makeup");
 });
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 
 // Server Started
