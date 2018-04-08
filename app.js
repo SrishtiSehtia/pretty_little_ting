@@ -3,6 +3,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
     Makeup      = require("./models/makeup"),
+    seedDB      = require("./seeds")
 
 mongoose.connect("mongodb://localhost/plt");
 app.use(bodyParser.urlencoded({extended: true}));
