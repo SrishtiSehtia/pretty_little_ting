@@ -4,4 +4,11 @@
 <img src="<%= makeup.image %>">
 
 <p><%= makeup.description %></p>
+
+<% makeup.comments.forEach(function(comment){ %>
+    <p>
+        <strong><%= comment.author %></strong> - <%= comment.text %>
+    </p>
+<% }) %>
+
 <% include partials/footer %>
