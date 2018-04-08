@@ -26,8 +26,17 @@ app.get("/", function(req, res){
     res.render("landing");
 });
 
+
+//INDEX - show all makeup
 app.get("/makeup", function(req, res){
-    res.render("makeup",{makeup:makeup});
+    // Get all makeup from DB
+    Campground.find({}, function(err, allMakeup){
+       if(err){
+           console.log(err);
+       } else {
+          res.render("index",{makeup:allMakeup});
+       }
+    });
 });
 
 app.post("/makeup", function(req, res){
