@@ -4,10 +4,10 @@ var makeupSchema = new mongoose.Schema({
    name: String,
    image: String,
    description: String,
-   comments: [
+   reviews: [
       {
          type: mongoose.Schema.Types.ObjectId,
-         ref: "Comment"
+         ref: "Review"
       }
    ]
 });

@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Makeup = require("./models/makeup");
-var Comment   = require("./models/comment");
+var Review   = require("./models/review");
 
 var data = [
     {
@@ -34,25 +34,25 @@ function seedDB(){
                     console.log(err)
                 } else {
                     console.log("added a makeup");
-                    //create a comment
-                    Comment.create(
+                    //create a review
+                    Review.create(
                         {
                             text: "This is the best product I have ever bought",
                             author: "Princess"
-                        }, function(err, comment){
+                        }, function(err, review){
                             if(err){
                                 console.log(err);
                             } else {
-                                makeup.comments.push(comment);
+                                makeup.reviews.push(review);
                                 makeup.save();
-                                console.log("Created new comment");
+                                console.log("Created new review");
                             }
                         });
                 }
             });
         });
     });
-    //add a few comments
+    //add a few reviews
 }
 
 module.exports = seedDB;

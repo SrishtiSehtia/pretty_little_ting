@@ -60,10 +60,11 @@ app.get("/makeup/new", function(req, res){
 // SHOW - shows more info about one makeup
 app.get("/makeup/:id", function(req, res){
     //find the makeup with provided ID
-    Makeup.findById(req.params.id).populate('comments').exec(function(err, foundMakeup){
+    Makeup.findById(req.params.id).populate('reviews').exec(function(err, foundMakeup){
         if(err){
             console.log(err);
         } else {
+            console.log(foundMakeup)
             //render show template with that makeup
             res.render("makeup/show", {makeup: foundMakeup});
         }
@@ -71,18 +72,41 @@ app.get("/makeup/:id", function(req, res){
 })
 
 // ====================
-// COMMENTS ROUTES
+// reviewS ROUTES
 // ====================
 
-app.get("/makeup/:id/comments/new", function(req, res){
+app.get("/makeup/:id/reviews/new", function(req, res){
     // find makeup by id
     Makeup.findById(req.params.id, function(err, makeup){
         if(err){
             console.log(err);
         } else {
-             res.render("comments/new", {makeup: makeup});
+             res.render("reviews/new", {makeup: makeup});
         }
     })
+});
+
+app.post("/makeup/:id/reviews", function(req, res){
+   //lookup makeup using ID
+   Makeup.findById(req.params.id, function(err, makeup){
+       if(err){
+           console.log(err);
+           res.redirect("/makeup");
+       } else {
+        Review.create(req.body.review, function(err, review){
+           if(err){
+               console.log(err);
+           } else {
+               makeup.reviews.push(review);
+               makeup.save();
+               res.redirect('/makeup/' + makeup._id);
+           }
+        });
+       }
+   });
+   //create new review
+   //connect new review to makeup
+   //redirect makeup show page
 });
 
 // Server Started

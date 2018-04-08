@@ -5,9 +5,13 @@
 
 <p><%= makeup.description %></p>
 
-<% makeup.comments.forEach(function(comment){ %>
+<p>
+    <a class="btn btn-success" href="/makeup/<%= makeup._id %>/reviews/new">Add A New Review</a>
+</p>
+
+<% makeup.reviews.forEach(function(review){ %>
     <p>
-        <strong><%= comment.author %></strong> - <%= comment.text %>
+        <strong><%= review.author %></strong> - <%= review.text %>
     </p>
 <% }) %>
 
