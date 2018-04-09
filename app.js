@@ -111,17 +111,20 @@ app.post("/makeup/:id/reviews", isLoggedIn, function(req, res){
         Review.create(req.body.review, function(err, review){
            if(err){
                console.log(err);
-           } else {
-               makeup.reviews.push(review);
-               makeup.save();
-               res.redirect('/makeup/' + makeup._id);
-           }
-        });
+             } else {
+                //add username and id to review
+                review.author.id = req.user._id;
+                review.author.username = req.user.username;
+                //save review
+                review.save();
+                makeup.reviews.push(review);
+                makeup.save();
+                console.log(review);
+                res.redirect('/makeup/' + makeup._id);
+              }
+          });
        }
    });
-   //create new review
-   //connect new review to makeup
-   //redirect makeup show page
 });
 
 //  ===========
