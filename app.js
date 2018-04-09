@@ -6,15 +6,13 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     Makeup      = require("./models/makeup"),
     Review      = require("./models/review"),
-    User        = require("./models/user"),
-    seedDB      = require("./seeds")
+    User        = require("./models/user")
 
 mongoose.connect("mongodb://localhost/plt");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-seedDB();
-
+console.log('refresh1');
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Once again Rusty wins cutest dog!",

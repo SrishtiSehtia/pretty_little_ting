@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var Makeup = require("./models/makeup");
 var Review   = require("./models/review");
-
 var data = [
     {
         name: "Too Faced Eyeshadow",
@@ -49,7 +48,7 @@ var data = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
     },
     {
-        name: "Sephora Eyeshadow",
+        name: "Sephora Makeup",
         image: "https://burst.shopifycdn.com/photos/makeup-shadows-and-blushes_373x@2x.jpg",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
     },
@@ -68,6 +67,7 @@ var data = [
 
 function seedDB(){
    //Remove all makeup
+   console.log('here');
    Makeup.remove({}, function(err){
         if(err){
             console.log(err);
@@ -80,24 +80,15 @@ function seedDB(){
                     console.log(err)
                 } else {
                     console.log("added a makeup");
-                    // create a review
-                    // Review.create(
-                    //     {
-                    //       text: "This is the best product I have ever bought",
-                    //       author: "Princess"
-                    //     }, function(err, review){
-                    //         if(err){
-                    //             console.log(err);
-                    //         } else {
-                    //             makeup.reviews.push(review);
-                    //             makeup.save();
-                    //             console.log("Created new review");
-                    //         }
-                    //     });
+                    Review.remove({},function(err){
+                      if(err){
+                        console.log(err)
+                      }
+                      console.log('removed previous reviews');
+                    })
                 }
             });
         });
     });
 }
-
-module.exports = seedDB;
+seedDB();
