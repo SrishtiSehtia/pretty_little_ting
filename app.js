@@ -7,7 +7,8 @@ var express     = require("express"),
     Makeup      = require("./models/makeup"),
     Review      = require("./models/review"),
     User        = require("./models/user"),
-   methodOverride = require('method-override');
+   methodOverride = require('method-override'),
+   flash       = require("connect-flash"),
 
 
 mongoose.connect("mongodb://localhost/plt");
@@ -17,9 +18,10 @@ app.use(methodOverride('_method'))
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 console.log('refresh1');
+app.use(flash());
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "test",
     resave: false,
     saveUninitialized: false
 }));
@@ -188,7 +190,7 @@ app.post("/register", function(req, res){
 
 // show login form
 app.get("/login", function(req, res){
-   res.render("login");
+   res.render("login", {message: req.flash("error")});
 });
 // handling login logic
 app.post("/login", passport.authenticate("local",
@@ -208,6 +210,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("error", "You need to be logged in to do that");
     res.redirect("/login");
 }
 
