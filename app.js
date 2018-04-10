@@ -6,10 +6,14 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     Makeup      = require("./models/makeup"),
     Review      = require("./models/review"),
-    User        = require("./models/user")
+    User        = require("./models/user"),
+   methodOverride = require('method-override');
+
 
 mongoose.connect("mongodb://localhost/plt");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'))
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 console.log('refresh1');
@@ -124,6 +128,41 @@ app.post("/makeup/:id/reviews", isLoggedIn, function(req, res){
        }
    });
 });
+
+// Review EDIT ROUTE
+app.get("/makeup/:id/reviews/:review_id/edit", function(req, res){
+   Review.findById(req.params.review_id, function(err, foundReview){
+      if(err){
+          res.redirect("back");
+      } else {
+        res.render("reviews/edit", {makeup_id: req.params.id, review: foundReview});
+      }
+   });
+});
+
+// Review UPDATE
+app.put("/makeup/:id/reviews/:review_id", function(req, res){
+   Review.findByIdAndUpdate(req.params.review_id, req.body.review, function(err, updatedReview){
+      if(err){
+          res.redirect("back");
+      } else {
+          res.redirect("/makeup/" + req.params.id );
+      }
+   });
+});
+
+// Review DESTROY ROUTE
+app.delete("/makeup/:id/reviews/:review_id", function(req, res){
+    //findByIdAndRemove
+    Review.findByIdAndRemove(req.params.review_id, function(err){
+       if(err){
+           res.redirect("back");
+       } else {
+           res.redirect("/makeup/" + req.params.id);
+       }
+    });
+});
+
 
 //  ===========
 // AUTH ROUTES
