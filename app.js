@@ -11,7 +11,8 @@ var express     = require("express"),
    flash       = require("connect-flash");
 
 
-mongoose.connect("mongodb://localhost/plt");
+// mongoose.connect("mongodb://localhost/plt");
+mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/plt")
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'))
 

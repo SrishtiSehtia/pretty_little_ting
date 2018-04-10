@@ -49,7 +49,7 @@ h1, h2, h3, h4 a, strong {
   font-family: 'Dancing Script', cursive;
 }
 
-.footer-copyright, .col-md-6, .list-group-item {
+.footer-copyright, .col-md-6, .list-group-item, .form-control, a.btn, .alert {
   font-family: 'Quicksand', sans-serif;
 }
 
