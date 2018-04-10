@@ -8,7 +8,7 @@ var express     = require("express"),
     Review      = require("./models/review"),
     User        = require("./models/user"),
    methodOverride = require('method-override'),
-   flash       = require("connect-flash"),
+   flash       = require("connect-flash");
 
 
 mongoose.connect("mongodb://localhost/plt");
@@ -33,6 +33,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
    next();
 });
 
@@ -183,6 +185,7 @@ app.post("/register", function(req, res){
             return res.render("register");
         }
         passport.authenticate("local")(req, res, function(){
+          req.flash("success", "Welcome to Pretty Little Ting" + user.username);
            res.redirect("/makeup");
         });
     });
@@ -190,7 +193,7 @@ app.post("/register", function(req, res){
 
 // show login form
 app.get("/login", function(req, res){
-   res.render("login", {message: req.flash("error")});
+   res.render("login");
 });
 // handling login logic
 app.post("/login", passport.authenticate("local",
@@ -203,6 +206,7 @@ app.post("/login", passport.authenticate("local",
 // logout route
 app.get("/logout", function(req, res){
    req.logout();
+   req.flash("success", "Logged you out!");
    res.redirect("/makeup");
 });
 
