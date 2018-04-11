@@ -65,13 +65,15 @@ var data = [
 
 ]
 
-function seedDB(){
+mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/plt");
+
    //Remove all makeup
-   console.log('here');
-   Makeup.remove({}, function(err){
+   console.log('here2');
+   Makeup.remove({}, function(err,removed){
         if(err){
             console.log(err);
         }
+        console.log(removed);
         console.log("removed makeup!");
          //add makeup
         data.forEach(function(seed){
@@ -90,5 +92,3 @@ function seedDB(){
             });
         });
     });
-}
-seedDB();
